@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PDFinder - Busca Inteligente</title>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS custom (coloque style.css na mesma pasta) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased">
+  <div id="app-container" class="layout-centered min-h-screen">
+    <!-- Barra de Busca (Frame) -->
+    <main id="search-bar-frame">
+      <h1 id="app-title">PDFinder</h1>
+
+      <form id="search-form" onsubmit="return false;">
+        <!-- Assunto -->
+        <div class="form-group">
+          <label for="assunto-input">Assunto:</label>
+          <input id="assunto-input" type="text" placeholder="Ex: Python para Data Science" aria-label="Assunto">
+        </div>
+
+        <!-- Idioma -->
+        <div class="form-group">
+          <label for="idioma-combo">Idioma:</label>
+          <select id="idioma-combo" aria-label="Idioma">
+            <option value="pt">Português (pt)</option>
+            <option value="en">Inglês (en)</option>
+          </select>
+        </div>
+
+        <!-- Botão -->
+        <button id="search-button" type="button" aria-label="Pesquisar">
+          Pesquisar
+        </button>
+      </form>
+    </main>
+
+    <!-- Resultados -->
+    <section id="results-browser" class="custom-scrollbar hidden" aria-live="polite" aria-label="Resultados da busca">
+      <!-- resultados inseridos via JS -->
+    </section>
+
+    <!-- Barra de Status -->
+    <div id="status-bar">
+      <p id="status-label">Pronto</p>
+    </div>
+
+    <!-- Footer com botões adicionais -->
+    <footer id="app-footer">
+      <a href="https://github.com/Mxlsc-XXX" target="_blank" rel="noopener noreferrer" class="footer-button">
+        GitHub
+      </a>
+      <a href="https://pixgg.com/Mxlsc" target="_blank" rel="noopener noreferrer" class="footer-button">
+        Doação
+      </a>
+    </footer>
+  </div>
+
+  <!-- Script separado (coloque app.js na mesma pasta) -->
+  <script src="app.js"></script>
+</body>
+</html>

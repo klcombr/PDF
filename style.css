@@ -1,0 +1,345 @@
+:root {
+    /* Cores (Monocromático em tons de cinza, estilo NG.CASH - Tema Escuro) */
+    --ng-white: #ffffff;
+    --ng-black: #0a0a0a;         /* Fundo ultra-escuro */
+    --ng-bg-primary: #0a0a0a;    /* Cor de fundo principal */
+    --ng-surface-primary: #1a1a1a; /* Cor de superfície principal (itens de resultado) */
+    --ng-surface-secondary: #2c2c2c; /* Cor de superfície secundária (barra de busca, inputs) */
+    --ng-text-primary: #ffffff;  /* Cor de texto principal */
+    --ng-text-secondary: #b0b0b0; /* Cor de texto secundário */
+    --ng-accent: #ffffff;        /* Branco puro para destaque/botão */
+    --ng-hover: #e0e0e0;         /* Cinza claro para hover */
+    --ng-active: #c0c0c0;        /* Cinza médio para active */
+
+    /* Transições e Estilos de Layout */
+    --transition-fast: 0.3s ease-in-out;
+    --transition-layout: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius-min: 4px; /* Raio mínimo para suavizar cantos */
+}
+
+/* Reset Geral */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--ng-bg-primary);
+    color: var(--ng-text-primary);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    overflow-y: hidden; /* Mantido para o layout principal */
+    -webkit-font-smoothing: antialiased; /* Equivalent to antialiased class */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+* Layout Principal e Animação
+*/
+#app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 100vh;
+    transition: all var(--transition-layout);
+    position: relative; /* Adicionado para posicionamento absoluto dos elementos */
+}
+
+/* Layout Centrado (Início da Aplicação) */
+.layout-centered {
+    justify-content: center;
+    align-items: center;
+}
+
+/* Layout de Resultados (Centraliza a coluna de busca/resultados e move a busca para o topo) */
+.layout-results {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/*
+* 🔍 Barra de Busca (Frame)
+*/
+#search-bar-frame {
+    width: 100%;
+    max-width: 600px;
+    padding: 1.5rem;
+    background: var(--ng-surface-secondary);
+    border-radius: var(--border-radius-min);
+    border: 2px solid var(--ng-text-primary); /* Borda sólida */
+    box-shadow: 8px 8px 0px var(--ng-text-primary); /* Sombra sólida */
+    transition: all var(--transition-layout);
+    backdrop-filter: blur(0);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10; /* Garante que a barra de busca esteja acima de outros elementos */
+}
+
+/* Estilo quando a barra de busca "sobe" e diminui */
+.layout-results #search-bar-frame {
+    padding: 1rem 1.5rem;
+    margin-top: 0; /* Remove a margem superior */
+    top: 2rem; /* Move para o topo */
+    transform: translate(-50%, 0); /* Ajusta a centralização */
+    max-width: 400px; /* Diminui a largura */
+}
+
+/* Título da Aplicação */
+#app-title {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    margin-bottom: 1.5rem; /* mb-6 */
+    color: var(--ng-text-primary); /* text-white */
+    text-align: center; /* text-center */
+}
+
+/* Formulário de Busca */
+#search-form {
+    display: flex; /* flex */
+    flex-direction: column; /* flex-col */
+    gap: 1rem; /* gap-4 */
+    align-items: flex-end; /* items-end */
+}
+@media (min-width: 768px) { /* md:flex-row */
+    #search-form {
+        flex-direction: row;
+    }
+}
+
+/* Grupos de Formulário */
+.form-group {
+    display: flex; /* flex */
+    flex-direction: column; /* flex-col */
+    flex-grow: 1; /* flex-grow */
+    width: 100%; /* w-full */
+}
+
+/* Labels */
+.form-group label {
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 600; /* font-semibold */
+    margin-bottom: 0.25rem; /* mb-1 */
+    color: var(--ng-text-primary); /* text-white */
+}
+
+/*
+* ✍️ Inputs
+*/
+input, select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-min);
+    border: 2px solid var(--ng-text-primary); /* Borda sólida */
+    background-color: var(--ng-surface-primary);
+    color: var(--ng-text-primary);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+    box-shadow: 4px 4px 0px var(--ng-text-primary); /* Sombra sólida */
+}
+input:focus, select:focus {
+    background-color: var(--ng-surface-primary);
+    box-shadow: 4px 4px 0px var(--ng-text-secondary), 0 0 0 2px var(--ng-text-secondary); /* Sombra sólida e foco */
+    outline: none;
+    border-color: var(--ng-text-secondary);
+}
+select {
+    appearance: none; /* appearance-none */
+    padding-right: 2rem; /* pr-8 */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.5em;
+}
+
+/*
+* 🔘 Botão (Branco e Forte)
+*/
+button {
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-min);
+    background-color: var(--ng-accent);
+    color: var(--ng-black);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    border: 2px solid var(--ng-black); /* Borda sólida preta */
+    box-shadow: 4px 4px 0px var(--ng-black); /* Sombra sólida preta */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 1;
+    width: 100%;
+}
+@media (min-width: 768px) {
+    button {
+        width: auto;
+    }
+}
+button:hover {
+    background-color: var(--ng-hover);
+    transform: translateY(-2px) translateX(-2px); /* Move para cima e para a esquerda no hover */
+    box-shadow: 6px 6px 0px var(--ng-black); /* Sombra mais pronunciada no hover */
+    border: 2px solid var(--ng-black);
+}
+button:active {
+    background-color: var(--ng-active);
+    transform: translateY(0) translateX(0); /* Retorna à posição original no active */
+    box-shadow: 4px 4px 0px var(--ng-black);
+}
+button:disabled {
+    background-color: var(--ng-surface-secondary);
+    color: var(--ng-text-secondary);
+    cursor: not-allowed;
+    box-shadow: none;
+    border: 2px solid var(--ng-text-secondary);
+}
+
+/*
+* 📄 Resultados
+*/
+#results-browser {
+    flex-grow: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: all var(--transition-layout);
+    
+    /* Posicionamento para aparecer ao lado da barra de busca */
+    position: absolute;
+    top: 10rem; /* Ajuste conforme a altura da search-bar-frame no layout-results */
+    left: 50%;
+    transform: translateX(-50%);
+    height: calc(100vh - 12rem); /* Ajusta a altura para não sobrepor o status bar */
+    z-index: 5; /* Garante que os resultados estejam abaixo da barra de busca, mas acima do fundo */
+
+    /* Scrollbar (mantido) */
+    -ms-overflow-style: none;
+    scrollbar-width: thin;
+}
+
+/* Item de Resultado (A chave para o estilo "seamless") */
+.result-item {
+    background: var(--ng-surface-primary); /* Fundo dos itens de resultado */
+    border: 1px solid var(--ng-surface-secondary); /* Borda sutil para definição */
+    border-radius: var(--border-radius-min); /* Cantos arredondados */
+    padding: 1.5rem 1.5rem;
+    transition: all var(--transition-fast);
+    box-shadow: none; /* Sem sombra */
+}
+/* No hover, usamos o branco para sublinhar/destacar o item */
+.result-item:hover {
+    border-left: 4px solid var(--ng-text-primary); /* Borda lateral para destaque */
+    background: var(--ng-surface-secondary); /* Fica mais claro no hover */
+    transform: none; /* Remove o levantamento */
+}
+.result-item p { margin-bottom: 0.25rem; color: var(--ng-text-secondary); }
+.result-item a {
+    word-break: break-word;
+    color: var(--ng-text-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+.result-item a:hover {
+    color: var(--ng-text-primary); /* Cor do link no hover */
+    text-decoration: underline;
+}
+
+/* Scrollbar (Ajustado para o fundo escuro) */
+.custom-scrollbar::-webkit-scrollbar { width: 8px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: var(--ng-bg-primary); } /* Cor do body */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--ng-surface-secondary);
+    border-radius: 4px;
+    border: 2px solid var(--ng-bg-primary); /* Cor do body */
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--ng-text-secondary);
+}
+
+
+/*
+* 📣 Barra de Status
+*/
+#status-bar {
+    background-color: var(--ng-accent);
+    color: var(--ng-black);
+    font-weight: 700;
+    position: fixed; /* fixed */
+    bottom: 0; /* bottom-0 */
+    left: 0; /* left-0 */
+    width: 100%; /* w-full */
+    padding: 0.75rem 1.5rem; /* py-2 px-6 */
+    opacity: 0;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    transform: translateY(100%);
+    box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-size: 0.875rem; /* text-sm */
+}
+#status-bar.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/*
+* 📱 Responsividade
+*/
+@media (max-width: 768px) {
+    #search-bar-frame, #results-browser {
+        padding: 1rem;
+        max-width: 100%; /* Ocupa toda a largura em mobile */
+    }
+    button { width: 100%; }
+}
+
+/*
+* 🦶 Footer com botões adicionais
+*/
+#app-footer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--ng-bg-primary); /* Fundo do footer */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.footer-button {
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--border-radius-min);
+    background-color: var(--ng-surface-secondary);
+    color: var(--ng-text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    border: 2px solid var(--ng-text-primary); /* Borda sólida */
+    box-shadow: 4px 4px 0px var(--ng-text-primary); /* Sombra sólida */
+}
+
+.footer-button:hover {
+    background-color: var(--ng-surface-primary);
+    color: var(--ng-accent);
+    border-color: var(--ng-accent);
+    transform: translateY(-2px) translateX(-2px); /* Move para cima e para a esquerda no hover */
+    box-shadow: 6px 6px 0px var(--ng-text-primary); /* Sombra mais pronunciada no hover */
+}
+
+.footer-button:active {
+    background-color: var(--ng-medium-gray);
+    color: var(--ng-text-primary);
+    transform: translateY(0) translateX(0); /* Retorna à posição original no active */
+    box-shadow: 4px 4px 0px var(--ng-text-primary);
+}
