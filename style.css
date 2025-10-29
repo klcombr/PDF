@@ -31,7 +31,7 @@ body {
     background-color: var(--ng-bg-primary);
     color: var(--ng-text-primary);
     transition: background-color var(--transition-fast), color var(--transition-fast);
-    overflow-y: hidden; /* Mantido para o layout principal */
+    overflow-y: auto; /* Alterado para auto para permitir rolagem em telas menores */
     -webkit-font-smoothing: antialiased; /* Equivalent to antialiased class */
     -moz-osx-font-smoothing: grayscale;
 }
@@ -294,11 +294,62 @@ button:disabled {
 * 📱 Responsividade
 */
 @media (max-width: 768px) {
-    #search-bar-frame, #results-browser {
+    #search-bar-frame {
         padding: 1rem;
-        max-width: 100%; /* Ocupa toda a largura em mobile */
+        max-width: 100%;
+        width: calc(100% - 2rem); /* Ajusta a largura para ter padding nas laterais */
+        position: relative; /* Altera para posicionamento relativo */
+        top: auto; /* Remove o top fixo */
+        left: auto; /* Remove o left fixo */
+        transform: none; /* Remove a transformação */
+        margin: 1rem auto; /* Centraliza e adiciona margem */
     }
-    button { width: 100%; }
+
+    .layout-results #search-bar-frame {
+        padding: 1rem;
+        margin-top: 1rem;
+        top: auto;
+        transform: none;
+        max-width: 100%;
+        width: calc(100% - 2rem);
+    }
+
+    #app-title {
+        font-size: 1.5rem; /* Reduz o tamanho do título em mobile */
+        margin-bottom: 1rem;
+    }
+
+    #search-form {
+        flex-direction: column; /* Garante que o formulário seja em coluna */
+        align-items: stretch; /* Estica os itens para preencher a largura */
+    }
+
+    button {
+        width: 100%;
+    }
+
+    #results-browser {
+        padding: 1rem;
+        max-width: 100%;
+        width: calc(100% - 2rem); /* Ajusta a largura para ter padding nas laterais */
+        position: relative; /* Altera para posicionamento relativo */
+        top: auto; /* Remove o top fixo */
+        left: auto; /* Remove o left fixo */
+        transform: none; /* Remove a transformação */
+        height: auto; /* Permite que a altura se ajuste ao conteúdo */
+        margin: 1rem auto 6rem auto; /* Adiciona margem inferior para o footer */
+    }
+
+    #app-footer {
+        flex-direction: column; /* Botões do footer em coluna */
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .footer-button {
+        width: 100%;
+        padding: 0.75rem 1rem;
+    }
 }
 
 /*
