@@ -25,16 +25,3 @@ PDFinder é uma aplicação web que permite buscar arquivos PDF na internet de f
 3. Selecione o idioma desejado.
 4. Clique em **Pesquisar** ou pressione **Enter**.
 5. Aguarde os resultados aparecerem na tela.
-
-## Configuração da API
-
-Para que a busca funcione, você precisa de:
-
-- `API_KEY` do Google Custom Search.
-- `CX` (ID do motor de busca customizado).
-
-No arquivo `app.js`, substitua:
-
-```javascript
-const API_KEY = "SUA_API_KEY";
-const CX = "SEU_CX";
