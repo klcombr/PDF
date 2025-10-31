@@ -11,7 +11,6 @@
   <!-- Fonte -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS custom (coloque style.css na mesma pasta) -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased">
@@ -34,6 +33,12 @@
             <option value="pt">Português (pt)</option>
             <option value="en">Inglês (en)</option>
           </select>
+        </div>
+
+        <!-- Quantidade de Resultados -->
+        <div class="form-group">
+          <label for="quantidade-input">Quantidade:</label>
+          <input id="quantidade-input" type="number" value="10" min="1" max="100" aria-label="Quantidade de resultados">
         </div>
 
         <!-- Botão -->

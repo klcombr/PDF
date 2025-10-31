@@ -1,396 +1,331 @@
 :root {
-    /* Cores (Monocromático em tons de cinza, estilo NG.CASH - Tema Escuro) */
-    --ng-white: #ffffff;
-    --ng-black: #0a0a0a;         /* Fundo ultra-escuro */
-    --ng-bg-primary: #0a0a0a;    /* Cor de fundo principal */
-    --ng-surface-primary: #1a1a1a; /* Cor de superfície principal (itens de resultado) */
-    --ng-surface-secondary: #2c2c2c; /* Cor de superfície secundária (barra de busca, inputs) */
-    --ng-text-primary: #ffffff;  /* Cor de texto principal */
-    --ng-text-secondary: #b0b0b0; /* Cor de texto secundário */
-    --ng-accent: #ffffff;        /* Branco puro para destaque/botão */
-    --ng-hover: #e0e0e0;         /* Cinza claro para hover */
-    --ng-active: #c0c0c0;        /* Cinza médio para active */
+  /* Cores padrão (dark) */
+  --ng-white: #ffffff;
+  --ng-black: #0a0a0a;
+  --ng-bg-primary: #0a0a0a;
+  --ng-surface-primary: #1a1a1a;
+  --ng-surface-secondary: #2c2c2c;
+  --ng-text-primary: #ffffff;
+  --ng-text-secondary: #c0c0c0;
+  --ng-accent: #ffffff;
+  --ng-hover: #e0e0e0;
+  --ng-active: #c0c0c0;
 
-    /* Transições e Estilos de Layout */
-    --transition-fast: 0.3s ease-in-out;
-    --transition-layout: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    --border-radius-min: 4px; /* Raio mínimo para suavizar cantos */
+  --radius: 4px;
+  --shadow-strong: 4px 4px 0 var(--ng-text-primary);
+  --shadow-strong-dark: 4px 4px 0 var(--ng-black);
+
+  --t-fast: 0.3s ease-in-out;
+  --t-layout: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout variables - approximate heights for calculations */
+  --search-bar-height-compact: 8rem; /* Height of search bar in results view */
+  --footer-height-actual: 4rem; /* Actual height of the footer */
+  --spacing-unit: 1rem; /* A general spacing unit */
 }
 
-/* Reset Geral */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* Tema claro */
+@media (prefers-color-scheme: light) {
+  :root {
+    --ng-white: #0a0a0a;
+    --ng-black: #ffffff;
+    --ng-bg-primary: #f5f5f5;
+    --ng-surface-primary: #ffffff;
+    --ng-surface-secondary: #e0e0e0;
+    --ng-text-primary: #0a0a0a;
+    --ng-text-secondary: #505050;
+    --ng-accent: #0a0a0a;
+    --ng-hover: #c0c0c0;
+    --ng-active: #a0a0a0;
+    --shadow-strong: 4px 4px 0 var(--ng-text-primary);
+    --shadow-strong-dark: 4px 4px 0 var(--ng-black);
+  }
 }
 
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--ng-bg-primary);
-    color: var(--ng-text-primary);
-    transition: background-color var(--transition-fast), color var(--transition-fast);
-    overflow-y: auto; /* Alterado para auto para permitir rolagem em telas menores */
-    -webkit-font-smoothing: antialiased; /* Equivalent to antialiased class */
-    -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', sans-serif;
+  background: var(--ng-bg-primary);
+  color: var(--ng-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--t-fast), color var(--t-fast);
 }
 
-/*
-* Layout Principal e Animação
-*/
+/* Layout principal */
 #app-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    min-height: 100vh;
-    transition: all var(--transition-layout);
-    position: relative; /* Adicionado para posicionamento absoluto dos elementos */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: all var(--t-layout);
+  justify-content: space-between; /* Push footer to bottom */
+  align-items: center; /* Center content horizontally by default */
+  padding-bottom: var(--footer-height-actual); /* Add padding for fixed footer */
 }
-
-/* Layout Centrado (Início da Aplicação) */
 .layout-centered {
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
 }
-
-/* Layout de Resultados (Centraliza a coluna de busca/resultados e move a busca para o topo) */
 .layout-results {
-    justify-content: flex-start;
-    align-items: center;
+  justify-content: flex-start; /* Align items to the start when results are shown */
+  align-items: center; /* Keep items centered horizontally */
 }
 
-/*
-* 🔍 Barra de Busca (Frame)
-*/
+/* Barra de busca */
 #search-bar-frame {
-    width: 100%;
-    max-width: 600px;
-    padding: 1.5rem;
-    background: var(--ng-surface-secondary);
-    border-radius: var(--border-radius-min);
-    border: 2px solid var(--ng-text-primary); /* Borda sólida */
-    box-shadow: 8px 8px 0px var(--ng-text-primary); /* Sombra sólida */
-    transition: all var(--transition-layout);
-    backdrop-filter: blur(0);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10; /* Garante que a barra de busca esteja acima de outros elementos */
+  width: 100%;
+  max-width: 600px;
+  padding: 1.5rem;
+  background: var(--ng-surface-secondary);
+  border-radius: var(--radius);
+  border: 2px solid var(--ng-text-primary);
+  box-shadow: 8px 8px 0 var(--ng-text-primary);
+  transition: all var(--t-layout);
+  z-index: 10;
+  margin: auto; /* Center horizontally and vertically when in layout-centered */
 }
-
-/* Estilo quando a barra de busca "sobe" e diminui */
+.layout-centered #search-bar-frame {
+  position: relative; /* Use relative positioning for consistent flow */
+  top: auto;
+  left: auto;
+  transform: none;
+  margin: auto; /* Center using auto margins */
+}
 .layout-results #search-bar-frame {
-    padding: 1rem 1.5rem;
-    margin-top: 0; /* Remove a margem superior */
-    top: 2rem; /* Move para o topo */
-    transform: translate(-50%, 0); /* Ajusta a centralização */
-    max-width: 400px; /* Diminui a largura */
+  position: relative; /* Ensure it's in document flow when results are shown */
+  margin-top: 2rem; /* Push down from top when results are shown */
+  margin-bottom: var(--spacing-unit); /* Space before results */
+  max-width: 400px;
+  padding: 1rem 1.25rem;
+  box-shadow: 6px 6px 0 var(--ng-text-primary);
+  margin-left: auto; /* Ensure horizontal centering */
+  margin-right: auto; /* Ensure horizontal centering */
+  top: auto; /* Reset top */
+  left: auto; /* Reset left */
+  transform: none; /* Reset transform */
 }
 
-/* Título da Aplicação */
+/* Título */
 #app-title {
-    font-size: 1.875rem; /* text-3xl */
-    font-weight: 700; /* font-bold */
-    margin-bottom: 1.5rem; /* mb-6 */
-    color: var(--ng-text-primary); /* text-white */
-    text-align: center; /* text-center */
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
-/* Formulário de Busca */
+/* Formulário */
 #search-form {
-    display: flex; /* flex */
-    flex-direction: column; /* flex-col */
-    gap: 1rem; /* gap-4 */
-    align-items: flex-end; /* items-end */
-}
-@media (min-width: 768px) { /* md:flex-row */
-    #search-form {
-        flex-direction: row;
-    }
-}
-
-/* Grupos de Formulário */
-.form-group {
-    display: flex; /* flex */
-    flex-direction: column; /* flex-col */
-    flex-grow: 1; /* flex-grow */
-    width: 100%; /* w-full */
-}
-
-/* Labels */
-.form-group label {
-    font-size: 0.875rem; /* text-sm */
-    font-weight: 600; /* font-semibold */
-    margin-bottom: 0.25rem; /* mb-1 */
-    color: var(--ng-text-primary); /* text-white */
-}
-
-/*
-* ✍️ Inputs
-*/
-input, select {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: var(--border-radius-min);
-    border: 2px solid var(--ng-text-primary); /* Borda sólida */
-    background-color: var(--ng-surface-primary);
-    color: var(--ng-text-primary);
-    font-size: 1rem;
-    transition: all var(--transition-fast);
-    box-shadow: 4px 4px 0px var(--ng-text-primary); /* Sombra sólida */
-}
-input:focus, select:focus {
-    background-color: var(--ng-surface-primary);
-    box-shadow: 4px 4px 0px var(--ng-text-secondary), 0 0 0 2px var(--ng-text-secondary); /* Sombra sólida e foco */
-    outline: none;
-    border-color: var(--ng-text-secondary);
-}
-select {
-    appearance: none; /* appearance-none */
-    padding-right: 2rem; /* pr-8 */
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 1.5em;
-}
-
-/*
-* 🔘 Botão (Branco e Forte)
-*/
-button {
-    font-weight: 700;
-    padding: 1rem 1.5rem;
-    border-radius: var(--border-radius-min);
-    background-color: var(--ng-accent);
-    color: var(--ng-black);
-    transition: all var(--transition-fast);
-    cursor: pointer;
-    border: 2px solid var(--ng-black); /* Borda sólida preta */
-    box-shadow: 4px 4px 0px var(--ng-black); /* Sombra sólida preta */
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 1;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 @media (min-width: 768px) {
-    button {
-        width: auto;
-    }
+  #search-form { flex-direction: row; align-items: flex-end; }
+}
+
+/* Inputs */
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+input, select {
+  width: 100%;
+  padding: 1rem 1.25rem; /* Increased padding */
+  border-radius: var(--radius);
+  border: 2px solid var(--ng-text-primary);
+  background: var(--ng-surface-primary);
+  color: var(--ng-text-primary);
+  font-size: 1.125rem; /* Increased font size */
+  box-shadow: var(--shadow-strong);
+  transition: all var(--t-fast);
+}
+input:focus-visible, select:focus-visible {
+  outline: none;
+  border-color: var(--ng-text-secondary);
+  box-shadow: 4px 4px 0 var(--ng-text-secondary), 0 0 0 2px var(--ng-text-secondary);
+}
+select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+}
+
+/* Botão */
+button {
+  font-weight: 700;
+  padding: 1.25rem 1.75rem; /* Increased padding */
+  border-radius: var(--radius);
+  border: 2px solid var(--ng-black);
+  background: var(--ng-accent);
+  color: var(--ng-black);
+  box-shadow: var(--shadow-strong-dark);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--t-fast);
 }
 button:hover {
-    background-color: var(--ng-hover);
-    transform: translateY(-2px) translateX(-2px); /* Move para cima e para a esquerda no hover */
-    box-shadow: 6px 6px 0px var(--ng-black); /* Sombra mais pronunciada no hover */
-    border: 2px solid var(--ng-black);
+  background: var(--ng-hover);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ng-black);
 }
 button:active {
-    background-color: var(--ng-active);
-    transform: translateY(0) translateX(0); /* Retorna à posição original no active */
-    box-shadow: 4px 4px 0px var(--ng-black);
+  background: var(--ng-active);
+  transform: none;
+  box-shadow: var(--shadow-strong-dark);
 }
 button:disabled {
-    background-color: var(--ng-surface-secondary);
-    color: var(--ng-text-secondary);
-    cursor: not-allowed;
-    box-shadow: none;
-    border: 2px solid var(--ng-text-secondary);
+  background: var(--ng-surface-secondary);
+  color: var(--ng-text-secondary);
+  border-color: var(--ng-text-secondary);
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
-/*
-* 📄 Resultados
-*/
+/* Resultados */
 #results-browser {
-    flex-grow: 1;
-    padding: 1.5rem;
-    overflow-y: auto;
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    transition: all var(--transition-layout);
-    
-    /* Posicionamento para aparecer ao lado da barra de busca */
-    position: absolute;
-    top: 10rem; /* Ajuste conforme a altura da search-bar-frame no layout-results */
-    left: 50%;
-    transform: translateX(-50%);
-    height: calc(100vh - 12rem); /* Ajusta a altura para não sobrepor o status bar */
-    z-index: 5; /* Garante que os resultados estejam abaixo da barra de busca, mas acima do fundo */
-
-    /* Scrollbar (mantido) */
-    -ms-overflow-style: none;
-    scrollbar-width: thin;
+  flex: 1;
+  width: 100%;
+  max-width: 600px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow-y: auto;
+  transition: all var(--t-layout);
+  z-index: 5;
+  scrollbar-width: thin;
+  margin: var(--spacing-unit) auto; /* Consistent vertical margin */
 }
-
-/* Item de Resultado (A chave para o estilo "seamless") */
+.layout-results #results-browser {
+  position: relative; /* Ensure it's in document flow */
+  height: calc(100vh - var(--search-bar-height-compact) - var(--footer-height-actual) - var(--spacing-unit) * 3); /* Dynamic height calculation */
+  margin-top: 0; /* No extra top margin, it should follow search bar */
+  margin-bottom: var(--spacing-unit); /* Add some bottom margin before the footer */
+  flex-grow: 1; /* Allow it to grow and take available space */
+  min-height: 100px; /* Ensure a minimum height */
+}
 .result-item {
-    background: var(--ng-surface-primary); /* Fundo dos itens de resultado */
-    border: 1px solid var(--ng-surface-secondary); /* Borda sutil para definição */
-    border-radius: var(--border-radius-min); /* Cantos arredondados */
-    padding: 1.5rem 1.5rem;
-    transition: all var(--transition-fast);
-    box-shadow: none; /* Sem sombra */
+  background: var(--ng-surface-primary);
+  border: 1px solid var(--ng-surface-secondary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: all var(--t-fast);
 }
-/* No hover, usamos o branco para sublinhar/destacar o item */
 .result-item:hover {
-    border-left: 4px solid var(--ng-text-primary); /* Borda lateral para destaque */
-    background: var(--ng-surface-secondary); /* Fica mais claro no hover */
-    transform: none; /* Remove o levantamento */
+  border-left: 4px solid var(--ng-text-primary);
+  background: var(--ng-surface-secondary);
 }
-.result-item p { margin-bottom: 0.25rem; color: var(--ng-text-secondary); }
 .result-item a {
-    word-break: break-word;
-    color: var(--ng-text-primary);
-    font-weight: 600;
-    text-decoration: none;
-    transition: color var(--transition-fast);
+  color: var(--ng-text-primary);
+  font-weight: 600;
+  text-decoration: none;
 }
-.result-item a:hover {
-    color: var(--ng-text-primary); /* Cor do link no hover */
-    text-decoration: underline;
-}
+.result-item a:hover { text-decoration: underline; }
 
-/* Scrollbar (Ajustado para o fundo escuro) */
-.custom-scrollbar::-webkit-scrollbar { width: 8px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: var(--ng-bg-primary); } /* Cor do body */
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--ng-surface-secondary);
-    border-radius: 4px;
-    border: 2px solid var(--ng-bg-primary); /* Cor do body */
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb {
+  background: var(--ng-surface-secondary);
+  border-radius: 4px;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: var(--ng-text-secondary);
-}
+::-webkit-scrollbar-thumb:hover { background: var(--ng-text-secondary); }
 
-
-/*
-* 📣 Barra de Status
-*/
+/* Barra de status */
 #status-bar {
-    background-color: var(--ng-accent);
-    color: var(--ng-black);
-    font-weight: 700;
-    position: fixed; /* fixed */
-    bottom: 0; /* bottom-0 */
-    left: 0; /* left-0 */
-    width: 100%; /* w-full */
-    padding: 0.75rem 1.5rem; /* py-2 px-6 */
-    opacity: 0;
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
-    transform: translateY(100%);
-    box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.1);
-    text-align: center;
-    font-size: 0.875rem; /* text-sm */
+  background: var(--ng-accent);
+  color: var(--ng-black);
+  font-weight: 700;
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all var(--t-fast);
 }
 #status-bar.show {
-    opacity: 1;
-    transform: translateY(0);
+  transform: translateY(0);
+  opacity: 1;
 }
 
-/*
-* 📱 Responsividade
-*/
-@media (max-width: 768px) {
-    #search-bar-frame {
-        padding: 1rem;
-        max-width: 100%;
-        width: calc(100% - 2rem); /* Ajusta a largura para ter padding nas laterais */
-        position: relative; /* Altera para posicionamento relativo */
-        top: auto; /* Remove o top fixo */
-        left: auto; /* Remove o left fixo */
-        transform: none; /* Remove a transformação */
-        margin: 1rem auto; /* Centraliza e adiciona margem */
-    }
-
-    .layout-results #search-bar-frame {
-        padding: 1rem;
-        margin-top: 1rem;
-        top: auto;
-        transform: none;
-        max-width: 100%;
-        width: calc(100% - 2rem);
-    }
-
-    #app-title {
-        font-size: 1.5rem; /* Reduz o tamanho do título em mobile */
-        margin-bottom: 1rem;
-    }
-
-    #search-form {
-        flex-direction: column; /* Garante que o formulário seja em coluna */
-        align-items: stretch; /* Estica os itens para preencher a largura */
-    }
-
-    button {
-        width: 100%;
-    }
-
-    #results-browser {
-        padding: 1rem;
-        max-width: 100%;
-        width: calc(100% - 2rem); /* Ajusta a largura para ter padding nas laterais */
-        position: relative; /* Altera para posicionamento relativo */
-        top: auto; /* Remove o top fixo */
-        left: auto; /* Remove o left fixo */
-        transform: none; /* Remove a transformação */
-        height: auto; /* Permite que a altura se ajuste ao conteúdo */
-        margin: 1rem auto 6rem auto; /* Adiciona margem inferior para o footer */
-    }
-
-    #app-footer {
-        flex-direction: column; /* Botões do footer em coluna */
-        gap: 0.5rem;
-        padding: 0.75rem 1rem;
-    }
-
-    .footer-button {
-        width: 100%;
-        padding: 0.75rem 1rem;
-    }
-}
-
-/*
-* 🦶 Footer com botões adicionais
-*/
+/* Footer */
 #app-footer {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    padding: 1rem;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--ng-bg-primary); /* Fundo do footer */
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--ng-bg-primary);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  position: fixed; /* Change to fixed positioning */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20; /* Ensure footer is always on top */
+  margin-top: 0; /* Remove auto margin */
 }
-
 .footer-button {
-    font-weight: 600;
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--border-radius-min);
-    background-color: var(--ng-surface-secondary);
-    color: var(--ng-text-primary);
-    text-decoration: none;
-    transition: all var(--transition-fast);
-    cursor: pointer;
-    border: 2px solid var(--ng-text-primary); /* Borda sólida */
-    box-shadow: 4px 4px 0px var(--ng-text-primary); /* Sombra sólida */
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  background: var(--ng-surface-secondary);
+  color: var(--ng-text-primary);
+  border: 2px solid var(--ng-text-primary);
+  box-shadow: var(--shadow-strong);
+  font-weight: 600;
+  transition: all var(--t-fast);
 }
-
 .footer-button:hover {
-    background-color: var(--ng-surface-primary);
-    color: var(--ng-accent);
-    border-color: var(--ng-accent);
-    transform: translateY(-2px) translateX(-2px); /* Move para cima e para a esquerda no hover */
-    box-shadow: 6px 6px 0px var(--ng-text-primary); /* Sombra mais pronunciada no hover */
+  background: var(--ng-surface-primary);
+  color: var(--ng-accent);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ng-text-primary);
+}
+.footer-button:active {
+  transform: none;
+  box-shadow: var(--shadow-strong);
 }
 
-.footer-button:active {
-    background-color: var(--ng-medium-gray);
-    color: var(--ng-text-primary);
-    transform: translateY(0) translateX(0); /* Retorna à posição original no active */
-    box-shadow: 4px 4px 0px var(--ng-text-primary);
+@media (max-width: 768px) {
+  #search-bar-frame, #results-browser {
+    max-width: 100%;
+    padding:     1rem;
+    margin: var(--spacing-unit) auto;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    height: auto;
+  }
+  .layout-results #search-bar-frame {
+    margin-top: var(--spacing-unit); /* Adjust top margin for mobile */
+    margin-bottom: 0.5rem; /* Adjust bottom margin for mobile */
+  }
+  .layout-results #results-browser {
+    height: calc(100vh - var(--search-bar-height-mobile) - var(--footer-height-actual) - var(--spacing-unit) * 3);
+    margin-top: 0;
+    margin-bottom: 0.5rem; /* Adjust bottom margin for mobile */
+  }
+  #app-title { font-size: 1.5rem; margin-bottom: 1rem; }
+  #search-form { flex-direction: column; align-items: stretch; }
+  button, .footer-button { width: 100%; }
+  #app-footer { flex-direction: column; gap: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
 }
