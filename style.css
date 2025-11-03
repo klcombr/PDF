@@ -329,3 +329,68 @@ button:disabled {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* How to Use Pop-up Overlay */
+#how-to-use-overlay {
+  background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+#how-to-use-overlay:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+#how-to-use {
+  background: var(--ng-surface-primary);
+  color: var(--ng-text-primary);
+  border: 2px solid var(--ng-text-primary);
+  box-shadow: 8px 8px 0 var(--ng-text-primary);
+  border-radius: var(--radius);
+  padding: 2rem;
+  max-width: 450px; /* Slightly wider for better readability */
+  width: 90%;
+  position: relative;
+  transform: translateY(20px); /* Start slightly below center */
+  transition: transform 0.3s ease-in-out;
+}
+
+#how-to-use-overlay:not(.hidden) #how-to-use {
+  transform: translateY(0); /* Slide up to center */
+}
+
+#how-to-use h2 {
+  color: var(--ng-accent);
+  margin-bottom: 1rem;
+  font-size: 1.75rem; /* Slightly larger title */
+}
+
+#how-to-use p {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+#how-to-use button#close-how-to-use {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--ng-text-secondary);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: none;
+  transform: none;
+  transition: color var(--t-fast);
+}
+
+#how-to-use button#close-how-to-use:hover {
+  color: var(--ng-text-primary);
+  background: none;
+  box-shadow: none;
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PDFinder - Busca Inteligente</title>
+  <title data-i18n="appTitle">PDFinder - Busca Inteligente</title>
 
   <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,45 +17,45 @@
   <div id="app-container" class="layout-centered min-h-screen">
     <!-- Barra de Busca (Frame) -->
     <main id="search-bar-frame">
-      <h1 id="app-title">PDFinder</h1>
+      <h1 id="app-title" data-i18n="appTitle">PDFinder</h1>
 
       <form id="search-form" onsubmit="return false;">
         <!-- Assunto -->
         <div class="form-group">
-          <label for="assunto-input">Assunto:</label>
-          <input id="assunto-input" type="text" placeholder="Ex: Python para Data Science" aria-label="Assunto">
+          <label for="assunto-input" data-i18n="subjectLabel">Assunto:</label>
+          <input id="assunto-input" type="text" placeholder="Ex: Python para Data Science" aria-label="Assunto" data-i18n-placeholder="subjectPlaceholder">
         </div>
 
         <!-- Idioma -->
         <div class="form-group">
-          <label for="idioma-combo">Idioma:</label>
+          <label for="idioma-combo" data-i18n="languageLabel">Idioma:</label>
           <select id="idioma-combo" aria-label="Idioma">
-            <option value="pt">Português (pt)</option>
-            <option value="en">Inglês (en)</option>
+            <option value="pt" data-i18n="portugueseOption">Português (pt)</option>
+            <option value="en" data-i18n="englishOption">Inglês (en)</option>
           </select>
         </div>
 
         <!-- Quantidade de Resultados -->
         <div class="form-group">
-          <label for="quantidade-input">Quantidade:</label>
+          <label for="quantidade-input" data-i18n="quantityLabel">Quantidade:</label>
           <input id="quantidade-input" type="number" value="10" min="1" max="100" aria-label="Quantidade de resultados">
         </div>
 
         <!-- Botão -->
-        <button id="search-button" type="button" aria-label="Pesquisar">
+        <button id="search-button" type="button" aria-label="Pesquisar" data-i18n="searchButton">
           Pesquisar
         </button>
       </form>
     </main>
 
     <!-- Resultados -->
-    <section id="results-browser" class="custom-scrollbar hidden" aria-live="polite" aria-label="Resultados da busca">
+    <section id="results-browser" class="custom-scrollbar hidden" aria-live="polite" aria-label="Resultados da busca" data-i18n-aria-label="searchResultsAriaLabel">
       <!-- resultados inseridos via JS -->
     </section>
 
     <!-- Barra de Status -->
     <div id="status-bar">
-      <p id="status-label">Pronto</p>
+      <p id="status-label" data-i18n="readyStatus">Pronto</p>
     </div>
 
     <!-- Footer com botões adicionais -->
@@ -66,10 +66,25 @@
       <a href="https://pixgg.com/Mxlsc" target="_blank" rel="noopener noreferrer" class="footer-button">
         Doação
       </a>
+      <button id="how-to-use-button" class="footer-button" data-i18n="howToUseButton">Como Usar</button>
     </footer>
   </div>
 
+  <!-- How to Use Section (as a pop-up) -->
+  <div id="how-to-use-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <section id="how-to-use" class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4 relative">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="howToUseTitle">Como Usar o PDFinder</h2>
+      <p class="mb-2" data-i18n="howToUseStep1">1. Digite o assunto desejado no campo "Assunto".</p>
+      <p class="mb-2" data-i18n="howToUseStep2">2. Selecione o idioma dos resultados no campo "Idioma".</p>
+      <p class="mb-2" data-i18n="howToUseStep3">3. Ajuste a quantidade de resultados que deseja ver.</p>
+      <p class="mb-2" data-i18n="howToUseStep4">4. Clique em "Pesquisar" para iniciar a busca.</p>
+      <p class="mb-2" data-i18n="howToUseStep5">5. Os resultados serão exibidos abaixo, com links diretos para os PDFs.</p>
+      <button id="close-how-to-use" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl" data-i18n="closeButton">&times;</button>
+    </section>
+  </div>
+
   <!-- Script separado (coloque app.js na mesma pasta) -->
+  <script src="translations.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
