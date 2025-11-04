@@ -1,44 +1,42 @@
 :root {
-  /* Cores padrão (dark) */
-  --ng-white: #ffffff;
-  --ng-black: #0a0a0a;
-  --ng-bg-primary: #0a0a0a;
-  --ng-surface-primary: #1a1a1a;
-  --ng-surface-secondary: #2c2c2c;
-  --ng-text-primary: #ffffff;
-  --ng-text-secondary: #c0c0c0;
-  --ng-accent: #ffffff;
-  --ng-hover: #e0e0e0;
-  --ng-active: #c0c0c0;
+  --white: #ffffff;
+  --black: #0a0a0a;
+  --bg-primary: #0a0a0a;
+  --surface-primary: #1a1a1a;
+  --surface-secondary: #2c2c2c;
+  --text-primary: #ffffff;
+  --text-secondary: #c0c0c0;
+  --accent: #ffffff;
+  --hover: #e0e0e0;
+  --active: #c0c0c0;
 
   --radius: 4px;
-  --shadow-strong: 4px 4px 0 var(--ng-text-primary);
-  --shadow-strong-dark: 4px 4px 0 var(--ng-black);
+  --shadow: 4px 4px 0 var(--text-primary);
+  --shadow-dark: 4px 4px 0 var(--black);
 
   --t-fast: 0.3s ease-in-out;
   --t-layout: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Layout variables - approximate heights for calculations */
-  --search-bar-height-compact: 8rem; /* Height of search bar in results view */
-  --footer-height-actual: 4rem; /* Actual height of the footer */
-  --spacing-unit: 1rem; /* A general spacing unit */
+  --spacing: 1rem;
+  --footer-height: 4rem;
+  --search-bar-height: 8rem;
 }
 
 /* Tema claro */
 @media (prefers-color-scheme: light) {
   :root {
-    --ng-white: #0a0a0a;
-    --ng-black: #ffffff;
-    --ng-bg-primary: #f5f5f5;
-    --ng-surface-primary: #ffffff;
-    --ng-surface-secondary: #e0e0e0;
-    --ng-text-primary: #0a0a0a;
-    --ng-text-secondary: #505050;
-    --ng-accent: #0a0a0a;
-    --ng-hover: #c0c0c0;
-    --ng-active: #a0a0a0;
-    --shadow-strong: 4px 4px 0 var(--ng-text-primary);
-    --shadow-strong-dark: 4px 4px 0 var(--ng-black);
+    --white: #0a0a0a;
+    --black: #ffffff;
+    --bg-primary: #f5f5f5;
+    --surface-primary: #ffffff;
+    --surface-secondary: #e0e0e0;
+    --text-primary: #0a0a0a;
+    --text-secondary: #505050;
+    --accent: #0a0a0a;
+    --hover: #c0c0c0;
+    --active: #a0a0a0;
+    --shadow: 4px 4px 0 var(--text-primary);
+    --shadow-dark: 4px 4px 0 var(--black);
   }
 }
 
@@ -50,8 +48,8 @@
 }
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--ng-bg-primary);
-  color: var(--ng-text-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background var(--t-fast), color var(--t-fast);
@@ -62,54 +60,24 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: var(--footer-height);
   transition: all var(--t-layout);
-  justify-content: space-between; /* Push footer to bottom */
-  align-items: center; /* Center content horizontally by default */
-  padding-bottom: var(--footer-height-actual); /* Add padding for fixed footer */
-}
-.layout-centered {
-  justify-content: center;
-}
-.layout-results {
-  justify-content: flex-start; /* Align items to the start when results are shown */
-  align-items: center; /* Keep items centered horizontally */
 }
 
-/* Barra de busca */
 #search-bar-frame {
   width: 100%;
   max-width: 600px;
   padding: 1.5rem;
-  background: var(--ng-surface-secondary);
+  background: var(--surface-secondary);
   border-radius: var(--radius);
-  border: 2px solid var(--ng-text-primary);
-  box-shadow: 8px 8px 0 var(--ng-text-primary);
+  border: 2px solid var(--text-primary);
+  box-shadow: 8px 8px 0 var(--text-primary);
   transition: all var(--t-layout);
-  z-index: 10;
-  margin: auto; /* Center horizontally and vertically when in layout-centered */
-}
-.layout-centered #search-bar-frame {
-  position: relative; /* Use relative positioning for consistent flow */
-  top: auto;
-  left: auto;
-  transform: none;
-  margin: auto; /* Center using auto margins */
-}
-.layout-results #search-bar-frame {
-  position: relative; /* Ensure it's in document flow when results are shown */
-  margin-top: 2rem; /* Push down from top when results are shown */
-  margin-bottom: var(--spacing-unit); /* Space before results */
-  max-width: 400px;
-  padding: 1rem 1.25rem;
-  box-shadow: 6px 6px 0 var(--ng-text-primary);
-  margin-left: auto; /* Ensure horizontal centering */
-  margin-right: auto; /* Ensure horizontal centering */
-  top: auto; /* Reset top */
-  left: auto; /* Reset left */
-  transform: none; /* Reset transform */
+  margin: var(--spacing) auto;
 }
 
-/* Título */
 #app-title {
   font-size: 1.875rem;
   font-weight: 700;
@@ -124,10 +92,11 @@ body {
   gap: 1rem;
 }
 @media (min-width: 768px) {
-  #search-form { flex-direction: row; align-items: flex-end; }
+  #search-form {
+    flex-direction: row;
+    align-items: flex-end;
+  }
 }
-
-/* Inputs */
 .form-group {
   flex: 1;
   display: flex;
@@ -138,58 +107,56 @@ label {
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
+
+/* Inputs e Select */
 input, select {
   width: 100%;
-  padding: 1rem 1.25rem; /* Increased padding */
+  padding: 1rem 1.25rem;
   border-radius: var(--radius);
-  border: 2px solid var(--ng-text-primary);
-  background: var(--ng-surface-primary);
-  color: var(--ng-text-primary);
-  font-size: 1.125rem; /* Increased font size */
-  box-shadow: var(--shadow-strong);
+  border: 2px solid var(--text-primary);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  box-shadow: var(--shadow);
   transition: all var(--t-fast);
 }
-input:focus-visible, select:focus-visible {
+input:focus, select:focus {
   outline: none;
-  border-color: var(--ng-text-secondary);
-  box-shadow: 4px 4px 0 var(--ng-text-secondary), 0 0 0 2px var(--ng-text-secondary);
+  border-color: var(--text-secondary);
+  box-shadow: 4px 4px 0 var(--text-secondary), 0 0 0 2px var(--text-secondary);
 }
 select {
   appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 1.25rem;
+  background: var(--surface-primary) url('data:image/svg+xml;utf8,<svg fill="%23ffffff" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 0.75rem center/1.25rem;
 }
 
-/* Botão */
-button {
+/* Botões (mantendo estilo antigo) */
+button, .footer-button {
   font-weight: 700;
-  padding: 1.25rem 1.75rem; /* Increased padding */
   border-radius: var(--radius);
-  border: 2px solid var(--ng-black);
-  background: var(--ng-accent);
-  color: var(--ng-black);
-  box-shadow: var(--shadow-strong-dark);
+  cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 1px;
-  cursor: pointer;
   transition: all var(--t-fast);
+  padding: 1.25rem 1.75rem;
+  border: 2px solid var(--black);
+  background: var(--accent);
+  color: var(--black);
+  box-shadow: var(--shadow-dark);
 }
-button:hover {
-  background: var(--ng-hover);
+button:hover, .footer-button:hover {
+  background: var(--hover);
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--ng-black);
+  box-shadow: 6px 6px 0 var(--black);
 }
-button:active {
-  background: var(--ng-active);
+button:active, .footer-button:active {
   transform: none;
-  box-shadow: var(--shadow-strong-dark);
+  box-shadow: var(--shadow-dark);
 }
 button:disabled {
-  background: var(--ng-surface-secondary);
-  color: var(--ng-text-secondary);
-  border-color: var(--ng-text-secondary);
+  background: var(--surface-secondary);
+  color: var(--text-secondary);
+  border-color: var(--text-secondary);
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -205,48 +172,54 @@ button:disabled {
   gap: 0.25rem;
   overflow-y: auto;
   transition: all var(--t-layout);
-  z-index: 5;
-  scrollbar-width: thin;
-  margin: var(--spacing-unit) auto; /* Consistent vertical margin */
-}
-.layout-results #results-browser {
-  position: relative; /* Ensure it's in document flow */
-  height: calc(100vh - var(--search-bar-height-compact) - var(--footer-height-actual) - var(--spacing-unit) * 3); /* Dynamic height calculation */
-  margin-top: 0; /* No extra top margin, it should follow search bar */
-  margin-bottom: var(--spacing-unit); /* Add some bottom margin before the footer */
-  flex-grow: 1; /* Allow it to grow and take available space */
-  min-height: 100px; /* Ensure a minimum height */
+  margin: var(--spacing) auto;
 }
 .result-item {
-  background: var(--ng-surface-primary);
-  border: 1px solid var(--ng-surface-secondary);
+  background: var(--surface-primary);
+  border: 1px solid var(--surface-secondary);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: 1rem;
   transition: all var(--t-fast);
 }
 .result-item:hover {
-  border-left: 4px solid var(--ng-text-primary);
-  background: var(--ng-surface-secondary);
+  border-left: 4px solid var(--text-primary);
+  background: var(--surface-secondary);
 }
-.result-item a {
-  color: var(--ng-text-primary);
+.result-item .result-link-button {
   font-weight: 600;
-  text-decoration: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all var(--t-fast);
+  padding: 0.75rem 1rem; /* Slightly larger padding for better click area */
+  border: 2px solid var(--black);
+  background: var(--accent);
+  color: var(--black);
+  box-shadow: var(--shadow-dark);
+  font-size: 0.875rem;
+  margin-top: 0.75rem; /* Increased margin-top */
+  width: calc(100% - 1rem); /* Take almost full width with 0.5rem margin on each side */
+  display: block; /* Make it a block element to take full width */
+  margin-left: auto; /* Center the button if it doesn't take full width */
+  margin-right: auto; /* Center the button if it doesn't take full width */
 }
-.result-item a:hover { text-decoration: underline; }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-thumb {
-  background: var(--ng-surface-secondary);
-  border-radius: 4px;
+.result-item .result-link-button:hover {
+  background: var(--hover);
+  transform: translate(-1px, -1px); /* Smaller hover effect */
+  box-shadow: 3px 3px 0 var(--black);
 }
-::-webkit-scrollbar-thumb:hover { background: var(--ng-text-secondary); }
 
-/* Barra de status */
+.result-item .result-link-button:active {
+  transform: none;
+  box-shadow: var(--shadow-dark);
+}
+
+/* Status bar */
 #status-bar {
-  background: var(--ng-accent);
-  color: var(--ng-black);
+  background: var(--accent);
+  color: var(--black);
   font-weight: 700;
   text-align: center;
   font-size: 0.875rem;
@@ -270,127 +243,172 @@ button:disabled {
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
-  background: var(--ng-bg-primary);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-  position: fixed; /* Change to fixed positioning */
-  bottom: 0;
-  left: 0;
+  background: var(--bg-primary);
   width: 100%;
-  z-index: 20; /* Ensure footer is always on top */
-  margin-top: 0; /* Remove auto margin */
-}
-.footer-button {
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--radius);
-  background: var(--ng-surface-secondary);
-  color: var(--ng-text-primary);
-  border: 2px solid var(--ng-text-primary);
-  box-shadow: var(--shadow-strong);
-  font-weight: 600;
-  transition: all var(--t-fast);
-}
-.footer-button:hover {
-  background: var(--ng-surface-primary);
-  color: var(--ng-accent);
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--ng-text-primary);
-}
-.footer-button:active {
-  transform: none;
-  box-shadow: var(--shadow-strong);
+  position: fixed;
+  bottom: 0;
+  z-index: 20;
 }
 
-@media (max-width: 768px) {
-  #search-bar-frame, #results-browser {
-    max-width: 100%;
-    padding:     1rem;
-    margin: var(--spacing-unit) auto;
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    height: auto;
-  }
-  .layout-results #search-bar-frame {
-    margin-top: var(--spacing-unit); /* Adjust top margin for mobile */
-    margin-bottom: 0.5rem; /* Adjust bottom margin for mobile */
-  }
-  .layout-results #results-browser {
-    height: calc(100vh - var(--search-bar-height-mobile) - var(--footer-height-actual) - var(--spacing-unit) * 3);
-    margin-top: 0;
-    margin-bottom: 0.5rem; /* Adjust bottom margin for mobile */
-  }
-  #app-title { font-size: 1.5rem; margin-bottom: 1rem; }
-  #search-form { flex-direction: column; align-items: stretch; }
-  button, .footer-button { width: 100%; }
-  #app-footer { flex-direction: column; gap: 0.5rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
-}
-
-/* How to Use Pop-up Overlay */
+/* Como Usar (pop-up) */
 #how-to-use-overlay {
-  background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+  background-color: rgba(0,0,0,0.7);
+  position: fixed;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 50;
 }
 #how-to-use-overlay:not(.hidden) {
   opacity: 1;
   visibility: visible;
 }
 
+#how-to-use-overlay:not(.hidden) #how-to-use {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeIn 0.6s ease-out forwards; /* Re-apply fade-in for consistency */
+}
+
 #how-to-use {
-  background: var(--ng-surface-primary);
-  color: var(--ng-text-primary);
-  border: 2px solid var(--ng-text-primary);
-  box-shadow: 8px 8px 0 var(--ng-text-primary);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  border: 2px solid var(--text-primary);
   border-radius: var(--radius);
   padding: 2rem;
-  max-width: 450px; /* Slightly wider for better readability */
+  max-width: 450px;
   width: 90%;
   position: relative;
-  transform: translateY(20px); /* Start slightly below center */
-  transition: transform 0.3s ease-in-out;
+  box-shadow: 8px 8px 0 var(--text-primary);
+  /* Ensure it starts hidden for its own animation */
+  opacity: 0;
+  transform: translateY(20px);
 }
-
-#how-to-use-overlay:not(.hidden) #how-to-use {
-  transform: translateY(0); /* Slide up to center */
-}
-
 #how-to-use h2 {
-  color: var(--ng-accent);
+  color: var(--accent);
   margin-bottom: 1rem;
-  font-size: 1.75rem; /* Slightly larger title */
+  font-size: 1.75rem;
 }
-
 #how-to-use p {
   margin-bottom: 0.75rem;
   line-height: 1.5;
 }
-
-#how-to-use button#close-how-to-use {
+#close-how-to-use {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: var(--ng-text-secondary);
-  font-size: 2rem;
+  top: 0.75rem; /* Adjusted top position */
+  right: 0.75rem; /* Adjusted right position */
+  background: var(--accent);
+  border: 2px solid var(--black);
+  border-radius: var(--radius);
+  color: var(--black);
+  font-size: 1.5rem; /* Further decreased font size */
+  width: 2rem; /* Further decreased width */
+  height: 2rem; /* Further decreased height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  padding: 0;
-  box-shadow: none;
-  transform: none;
-  transition: color var(--t-fast);
+  transition: all var(--t-fast); /* Keep transition */
+  box-shadow: var(--shadow-dark); /* Use dark shadow for consistency */
+}
+  #close-how-to-use:hover {
+    background: var(--hover); /* Hover effect */
+    color: var(--black); /* Text color on hover */
+    box-shadow: 6px 6px 0 var(--black); /* Larger shadow on hover */
+    transform: translate(-2px, -2px); /* Slight movement on hover */
+  }
+  #close-how-to-use:active {
+    transform: none; /* Reset transform on active */
+    box-shadow: var(--shadow-dark); /* Reset shadow on active */
+  }
+
+/* Loading Spinner */
+#loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto;
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  transition: opacity var(--t-fast);
 }
 
-#how-to-use button#close-how-to-use:hover {
-  color: var(--ng-text-primary);
-  background: none;
-  box-shadow: none;
+#loading-spinner.hidden {
+  display: none;
+}
+
+.spinner {
+  border: 4px solid var(--surface-secondary);
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* General Animations */
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Apply fade-in to main sections */
+#search-bar-frame,
+#results-browser,
+#status-bar,
+#app-footer,
+#how-to-use {
+  opacity: 0; /* Start hidden for fade-in */
+}
+
+#app-container.loaded #search-bar-frame,
+#app-container.loaded #results-browser,
+#app-container.loaded #status-bar,
+#app-container.loaded #app-footer,
+#app-container.loaded #how-to-use {
+  opacity: 1;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Delay animations for a staggered effect */
+#app-container.loaded #search-bar-frame { animation-delay: 0.1s; }
+#app-container.loaded #results-browser { animation-delay: 0.2s; }
+#app-container.loaded #status-bar { animation-delay: 0.3s; }
+#app-container.loaded #app-footer { animation-delay: 0.4s; }
+#app-container.loaded #how-to-use { animation-delay: 0.5s; }
+
+/* Responsividade (continuação) */
+@media (max-width: 768px) {
+  #search-bar-frame,
+  #results-browser {
+    max-width: 95%;
+    padding: 1rem;
+    margin: var(--spacing) auto;
+  }
+  #search-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  button, .footer-button {
+    width: 100%;
+  }
+  #app-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }

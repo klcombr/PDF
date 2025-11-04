@@ -26,7 +26,10 @@ const translations = {
     "howToUseStep3": "3. Ajuste a quantidade de resultados que deseja ver.",
     "howToUseStep4": "4. Clique em \"Pesquisar\" para iniciar a busca.",
     "howToUseStep5": "5. Os resultados serão exibidos abaixo, com links diretos para os PDFs.",
-    "closeButton": "Fechar"
+    "closeButton": "X",
+    "githubButton": "GitHub",
+    "donationButton": "Doação",
+    "goToSiteButton": "Abrir PDF"
   },
   "en": {
     "appTitle": "PDFinder - Smart Search",
@@ -55,6 +58,9 @@ const translations = {
     "howToUseStep3": "3. Adjust the number of results you want to see.",
     "howToUseStep4": "4. Click \"Search\" to start the search.",
     "howToUseStep5": "5. Results will be displayed below, with direct links to PDFs.",
-    "closeButton": "Close"
+    "closeButton": "X",
+    "githubButton": "GitHub",
+    "donationButton": "Donation",
+    "goToSiteButton": "Open PDF"
   }
 };
